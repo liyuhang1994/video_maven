@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+		
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/**"/>
+				<mvc:exclude-mapping path="/static/**"/>
+				<!-- <mvc:exclude-mapping path="/front/**"/> -->
+				<mvc:exclude-mapping path="/front/user/userRegister.action"/>
+				<mvc:exclude-mapping path="/front/user/userLogin.action"/>
+				<mvc:exclude-mapping path="/front/user/toAdmin.action"/>
+				<mvc:exclude-mapping path="/front/user/forgetpwd.action"/>
+				<mvc:exclude-mapping path="/front/user/sendemail.action"/>
+				<mvc:exclude-mapping path="/front/user/forgetpwd.action"/>
+				<mvc:exclude-mapping path="/front/user/resetpwd.action"/>
+				<mvc:exclude-mapping path="/front/video/**"/>
+				<mvc:exclude-mapping path="/front/course/**"/>
+				<mvc:exclude-mapping path="/admin/adminLogin.action"/>
+				<mvc:exclude-mapping path="/admin/adminUserLogin.action"/>
+				<mvc:exclude-mapping path="/WEB-INF/view/admin/admin.jsp"/>
+				<mvc:exclude-mapping path="/admin/adminUserLoginIsExit.action"/>
+				<bean class="com.zhiyou100.video.web.interceptor.AdminCustomInterceptor"></bean>
+			</mvc:interceptor>
+		</mvc:interceptors>
+		<mvc:annotation-driven/>
+		<bean class="com.zhiyou100.video.web.exception.AdminCustomHandlerException"></bean>
+		<context:component-scan base-package="com.zhiyou100.video.web.controller"/>
+		
+		<mvc:default-servlet-handler/>
+		
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="prefix" value="/WEB-INF/view"></property>
+			<property name="suffix" value=".jsp"></property>
+		</bean>
+		
+		<bean class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite"></bean>
+		
+		<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="maxUploadSize" value="#{6*1024*1024}"></property>
+		</bean>
+</beans>

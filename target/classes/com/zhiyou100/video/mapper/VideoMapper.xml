@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyou100.video.mapper.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyou100.video.model.Video" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="video_title" property="video_title" jdbcType="VARCHAR" />
+    <result column="speaker_id" property="speaker_id" jdbcType="INTEGER" />
+    <result column="course_id" property="course_id" jdbcType="INTEGER" />
+    <result column="video_length" property="video_length" jdbcType="INTEGER" />
+    <result column="video_image_url" property="video_image_url" jdbcType="VARCHAR" />
+    <result column="video_url" property="video_url" jdbcType="VARCHAR" />
+    <result column="video_descr" property="video_descr" jdbcType="VARCHAR" />
+    <result column="insert_time" property="insert_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="video_play_times" property="video_play_times" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, video_title, speaker_id, course_id, video_length, video_image_url, video_url, 
+    video_descr, insert_time, update_time, video_play_times
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhiyou100.video.model.VideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from video
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhiyou100.video.model.VideoExample" >
+    delete from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhiyou100.video.model.Video" >
+    insert into video (id, video_title, speaker_id, 
+      course_id, video_length, video_image_url, 
+      video_url, video_descr, insert_time, 
+      update_time, video_play_times)
+    values (#{id,jdbcType=INTEGER}, #{video_title,jdbcType=VARCHAR}, #{speaker_id,jdbcType=INTEGER}, 
+      #{course_id,jdbcType=INTEGER}, #{video_length,jdbcType=INTEGER}, #{video_image_url,jdbcType=VARCHAR}, 
+      #{video_url,jdbcType=VARCHAR}, #{video_descr,jdbcType=VARCHAR}, #{insert_time,jdbcType=TIMESTAMP}, 
+      #{update_time,jdbcType=TIMESTAMP}, #{video_play_times,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhiyou100.video.model.Video" >
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="video_title != null" >
+        video_title,
+      </if>
+      <if test="speaker_id != null" >
+        speaker_id,
+      </if>
+      <if test="course_id != null" >
+        course_id,
+      </if>
+      <if test="video_length != null" >
+        video_length,
+      </if>
+      <if test="video_image_url != null" >
+        video_image_url,
+      </if>
+      <if test="video_url != null" >
+        video_url,
+      </if>
+      <if test="video_descr != null" >
+        video_descr,
+      </if>
+      <if test="insert_time != null" >
+        insert_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="video_play_times != null" >
+        video_play_times,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="video_title != null" >
+        #{video_title,jdbcType=VARCHAR},
+      </if>
+      <if test="speaker_id != null" >
+        #{speaker_id,jdbcType=INTEGER},
+      </if>
+      <if test="course_id != null" >
+        #{course_id,jdbcType=INTEGER},
+      </if>
+      <if test="video_length != null" >
+        #{video_length,jdbcType=INTEGER},
+      </if>
+      <if test="video_image_url != null" >
+        #{video_image_url,jdbcType=VARCHAR},
+      </if>
+      <if test="video_url != null" >
+        #{video_url,jdbcType=VARCHAR},
+      </if>
+      <if test="video_descr != null" >
+        #{video_descr,jdbcType=VARCHAR},
+      </if>
+      <if test="insert_time != null" >
+        #{insert_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="video_play_times != null" >
+        #{video_play_times,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhiyou100.video.model.VideoExample" resultType="java.lang.Integer" >
+    select count(*) from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update video
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.video_title != null" >
+        video_title = #{record.video_title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speaker_id != null" >
+        speaker_id = #{record.speaker_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.course_id != null" >
+        course_id = #{record.course_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.video_length != null" >
+        video_length = #{record.video_length,jdbcType=INTEGER},
+      </if>
+      <if test="record.video_image_url != null" >
+        video_image_url = #{record.video_image_url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.video_url != null" >
+        video_url = #{record.video_url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.video_descr != null" >
+        video_descr = #{record.video_descr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insert_time != null" >
+        insert_time = #{record.insert_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.update_time != null" >
+        update_time = #{record.update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.video_play_times != null" >
+        video_play_times = #{record.video_play_times,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update video
+    set id = #{record.id,jdbcType=INTEGER},
+      video_title = #{record.video_title,jdbcType=VARCHAR},
+      speaker_id = #{record.speaker_id,jdbcType=INTEGER},
+      course_id = #{record.course_id,jdbcType=INTEGER},
+      video_length = #{record.video_length,jdbcType=INTEGER},
+      video_image_url = #{record.video_image_url,jdbcType=VARCHAR},
+      video_url = #{record.video_url,jdbcType=VARCHAR},
+      video_descr = #{record.video_descr,jdbcType=VARCHAR},
+      insert_time = #{record.insert_time,jdbcType=TIMESTAMP},
+      update_time = #{record.update_time,jdbcType=TIMESTAMP},
+      video_play_times = #{record.video_play_times,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyou100.video.model.Video" >
+    update video
+    <set >
+      <if test="video_title != null" >
+        video_title = #{video_title,jdbcType=VARCHAR},
+      </if>
+      <if test="speaker_id != null" >
+        speaker_id = #{speaker_id,jdbcType=INTEGER},
+      </if>
+      <if test="course_id != null" >
+        course_id = #{course_id,jdbcType=INTEGER},
+      </if>
+      <if test="video_length != null" >
+        video_length = #{video_length,jdbcType=INTEGER},
+      </if>
+      <if test="video_image_url != null" >
+        video_image_url = #{video_image_url,jdbcType=VARCHAR},
+      </if>
+      <if test="video_url != null" >
+        video_url = #{video_url,jdbcType=VARCHAR},
+      </if>
+      <if test="video_descr != null" >
+        video_descr = #{video_descr,jdbcType=VARCHAR},
+      </if>
+      <if test="insert_time != null" >
+        insert_time = #{insert_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="video_play_times != null" >
+        video_play_times = #{video_play_times,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhiyou100.video.model.Video" >
+    update video
+    set video_title = #{video_title,jdbcType=VARCHAR},
+      speaker_id = #{speaker_id,jdbcType=INTEGER},
+      course_id = #{course_id,jdbcType=INTEGER},
+      video_length = #{video_length,jdbcType=INTEGER},
+      video_image_url = #{video_image_url,jdbcType=VARCHAR},
+      video_url = #{video_url,jdbcType=VARCHAR},
+      video_descr = #{video_descr,jdbcType=VARCHAR},
+      insert_time = #{insert_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      video_play_times = #{video_play_times,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  
+  
+  
+  <select id="findAllVideoByLimit" resultType="com.zhiyou100.video.model.Video">
+  	select v.*,s.speaker_name,c.course_name from (video v left join speaker s on v.speaker_id = s.id) left join course c on v.course_id = c.id 
+  	where v.video_title like '%' #{videoName} '%' 
+  	<if test="speakerName !=null and speakerName != ''">
+  		and s.speaker_name = #{speakerName}
+  	</if>
+  	<if test="courseName != null and courseName !=''">
+  		and c.course_name = #{courseName} 
+  	</if>
+  	limit #{i},5
+  </select>
+  
+  <select id="getAllVideoCountBySearch" resultType="int">
+  	select count(*) from (video v left join speaker s on v.speaker_id = s.id) left join course c on v.course_id = c.id 
+  	where v.video_title like '%' #{videoName} '%' 
+  	<if test="speakerName !=null and speakerName != ''">
+  		and s.speaker_name = #{speakerName}
+  	</if>
+  	<if test="courseName != null and courseName !=''">
+  		and c.course_name = #{courseName} 
+  	</if>
+  </select>
+  <!-- and LENGTH(s.speaker_name)>0 and LENGTH(c.course_name)>0 -->
+  
+  <!-- <select id="findAllVideoByLimit" resultType="com.zhiyou100.video.model.Video">
+  	select v.*,s.speaker_name,c.course_name from (video v left join speaker s on v.speaker_id = s.id) left join course c on v.course_id = c.id 
+  	where v.video_title like '%' #{videoName} '%' and 
+  	s.speaker_name like '%' #{speakerName} '%' and 
+  	c.course_name like '%' #{courseName} '%' limit #{i},5
+  </select>
+  <select id="getAllVideoCountBySearch" resultType="int">
+  	select count(*) from (video v left join speaker s on v.speaker_id = s.id) left join course c on v.course_id = c.id 
+  	where v.video_title like '%' #{videoName} '%' and 
+  	s.speaker_name like '%' #{speakerName} '%' and 
+  	c.course_name like '%' #{courseName} '%' 
+  </select> -->
+  
+  <update id="updateVideoPlayTimes" parameterType="int">
+  	update video set video_play_times=video_play_times+1 where id=#{v}
+  </update>
+</mapper>
